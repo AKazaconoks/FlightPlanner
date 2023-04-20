@@ -1,3 +1,4 @@
+using FlightPlanner.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlightPlanner.Controllers;
@@ -6,9 +7,24 @@ namespace FlightPlanner.Controllers;
 [Route("testing-api")]
 public class TestingController : ControllerBase
 {
-    [HttpPost("clear")]
-    public async Task<IActionResult> DeleteFlight()
+    private readonly DbServices _services;
+
+    public TestingController(DbServices services)
     {
+        _services = services;
+    }
+
+    [HttpPost("clear")]
+    public async Task<IActionResult> DeleteFlights()
+    {
+        await _services.DeleteAllFlightsAsync();
+        return Ok();
+    }
+
+    [HttpPost("clearA")]
+    public async Task<IActionResult> DeleteAirports()
+    {
+        await _services.DeleteAllAirportsAsync();
         return Ok();
     }
 }

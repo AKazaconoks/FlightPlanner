@@ -16,20 +16,33 @@ public class CustomerController : ControllerBase
     }
     
     [HttpGet("airports")]
-    public async Task<ActionResult<List<Airport>>> GetAirports()
+    public async Task<List<Airport>> GetAirports(string search)
     {
-        return await _services.GetAirportsAsync();
-    }
-    
-    [HttpGet("flights/{id}")]
-    public async Task<ActionResult<Flight>> GetFlight(int id)
-    {
-        return await _services.GetFlightByIdAsync(id);
+        return await _services.GetAirportsAsync(search);
     }
 
     [HttpPost("flights/search")]
-    public async Task AddSearch(SearchFlightRequest request)
+    public async Task<ActionResult<FlightSearchRequest>> GetFlightsByRequest(SearchFlightRequest request)
     {
-        
+        if (request.From == request.To)
+        {
+            return BadRequest();
+        }
+        var flights = await _services.GetFlightsBySearchAsync(request);
+        var response = new FlightSearchRequest
+        {
+            Items = flights,
+            Page = 0,
+            TotalItems = flights.Count
+        };
+        return response;
     }
+
+    [HttpGet("flights/{id}")]
+    public async Task<ActionResult<Flight>> GetFlightById(int id)
+    {
+        var flight = await _services.GetFlightByIdAsync(id);
+        return flight == null ? NotFound() : flight;
+    }
+
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -35,8 +34,8 @@ namespace FlightPlanner.Migrations
                     FromId = table.Column<int>(type: "int", nullable: false),
                     ToId = table.Column<int>(type: "int", nullable: false),
                     Carrier = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DepartureTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DepartureTime = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ArrivalTime = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
