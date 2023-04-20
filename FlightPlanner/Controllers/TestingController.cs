@@ -18,12 +18,6 @@ public class TestingController : ControllerBase
     public async Task<IActionResult> DeleteFlights()
     {
         await _services.DeleteAllFlightsAsync();
-        return Ok();
-    }
-
-    [HttpPost("clearA")]
-    public async Task<IActionResult> DeleteAirports()
-    {
         await _services.DeleteAllAirportsAsync();
         return Ok();
     }
